@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music-player</title>
+  <link rel="stylesheet" href="style.css">
+  <link 
+  rel="stylesheet" 
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" 
+  integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" 
+  crossorigin="anonymous" 
+  referrerpolicy="no-referrer" 
+  />
+
+</head>
+<body>
+    <div class ="html-container"></div>
+    <div class="main_div">
+     <div class="music_container">
+        <h2 id="title">NIGHT CHANGES</h2>
+        <h3 id="artist">One Direction</h3>
+        <div class="img_container">
+            <img src="images/Night Changes.jpeg" alt="" />
+        </div>
+        <audio src="music/Night Changes.mp3" ></audio>
+        <div class="music_controls ">
+           <i class="fa-solid fa-backward fav" id="prev" title="Previous"></i>
+           <i class="fa-solid fa-play main_button fav" id="play" title="Play"></i>
+           <i class="fa-solid fa-forward fav" id="next" title="Next"></i>
+        </div>
+     </div>
+    </div>
+    </div>
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const title = document.getElementById("title");
+        const artist = document.getElementById("artist");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+    const songs =[{
+        name: "Illusion",
+        title:"Illusion",
+        artist: " One Direction",
+    },
+    {
+        name: "Night Changes",
+        title:"Night Changes",
+        artist: " One Direction",
+    },
+    {
+        name: "Steal My Girl",
+        title:"Steal My Girl",
+        artist: " One Direction",
+    },
+    ];
+
+
+    //  play-pause functionality
+        let isPlaying= false;
+        // for play function
+        const playMusic = ()=>{
+            isPlaying =true;
+            music.play();
+            play.classList.replace('fa-play',"fa-pause");
+            img.classList.add("anime");
+        };
+        //for pause function 
+         const pauseMusic = ()=>{
+            isPlaying =false;
+            music.pause();
+            play.classList.replace('fa-pause',"fa-play");
+            img.classList.remove("anime");
+        };
+
+
+        play.addEventListener('click',()=>{
+            // if(isPlaying){
+           //     pauseMusic();
+            //}else{
+             //   playMusic();
+           // } 
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+        //next - previous songs functionality
+        const loadSong =(songs)=>{
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "music/" + songs.name + ".mp3";
+            img.src= "images/" + songs.name + ".jpeg";
+        };
+
+        songIndex = 1;
+       
+        const nextSong = () => {
+            songIndex = (songIndex + 1 ) % songs.length;
+             loadSong(songs[songIndex]); 
+             playMusic();
+        }
+         const prevSong = () => {
+            if(songIndex == 0){
+                songIndex = songs.length - 1;
+            }else{
+                songIndex = (songIndex -1);
+            }
+            loadSong(songs[songIndex]); 
+             playMusic();
+        }
+        next.addEventListener('click',nextSong)
+        prev.addEventListener('click',prevSong)
+        
+    </script>
+</body>
+</html>
